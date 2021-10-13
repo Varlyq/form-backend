@@ -1,0 +1,41 @@
+{
+  "name": "real-estate",
+  "version": "1.0.0",
+  "description": "Real Estate",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Aawez",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "fs": "0.0.1-security",
+    "hbs": "^4.1.1",
+    "http": "0.0.1-security",
+    "https": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "multer": "^1.4.3",
+    "mysql": "^2.18.1",
+    "ngrok": "^3.3.0",
+    "node-datetime": "^2.1.2",
+    "nodemailer": "^6.4.17",
+    "nodemailer-ses-transport": "^1.5.1",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7",
+    "randomstring": "^1.1.5",
+    "request": "^2.88.2",
+    "serialize-javascript": "^5.0.1",
+    "shopify-api-node": "^3.5.4",
+    "shopify-node-api": "^1.11.1",
+    "uuid": "^8.3.2"
+  }
+}
