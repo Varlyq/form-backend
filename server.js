@@ -17,14 +17,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Access-Control-Allow
+//CORS SETTING
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, PATCH, DELETE, OPTIONS'
-    );
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,Authorization');
+  if (req.method == 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'PUT,POST,PATCH,DELETE,GET');
+      return res.status(200).json({});
+  }
+  next();
 });
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
