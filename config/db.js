@@ -48,23 +48,23 @@ const sshClient = new Client();
 //     }).connect(tunnelConfig);
 // });
 
-var connection = mysql.createConnection({
-    host     : "166.62.27.188",
-    user     : "f1nzkuwltlgb",
-    password : "o24X}NO?yq",
-    database : "festive2021",
-    port     : 3306,
-    multipleStatements: true,
-});
-
 // var connection = mysql.createConnection({
-//     host     : process.env.DATABASE_HOST,
-//     user     : process.env.DATABASE_USER,
-//     password : process.env.DATABASE_PASSWORD,
-//     database : process.env.DATABASE_NAME,
+//     host     : "166.62.27.188",
+//     user     : "f1nzkuwltlgb",
+//     password : "o24X}NO?yq",
+//     database : "festive2021",
 //     port     : 3306,
 //     multipleStatements: true,
 // });
+
+var connection = mysql.createConnection({
+    host     : process.env.DATABASE_HOST,
+    user     : process.env.DATABASE_USER,
+    password : process.env.DATABASE_PASSWORD,
+    database : process.env.DATABASE_NAME,
+    port     : 3306,
+    multipleStatements: true,
+});
 
 connection.connect(function(err) {
     if (err) {
