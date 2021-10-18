@@ -50,8 +50,8 @@ const sshClient = new Client();
 
 // var connection = mysql.createConnection({
 //     host     : "166.62.27.188",
-//     user     : "festive2021",
-//     password : "festive@2021",
+//     user     : "f1nzkuwltlgb",
+//     password : "o24X}NO?yq",
 //     database : "festive2021",
 //     port     : 3306,
 //     multipleStatements: true,

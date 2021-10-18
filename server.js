@@ -9,13 +9,14 @@ var async = require("async");
 const multer = require('multer');
 var sql = require('./config/db');
 const path = require('path');
-
+var cors = require("cors");
 
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(cors());
 // Access-Control-Allow
 //CORS SETTING
 app.use((req, res, next) => {
