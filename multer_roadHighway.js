@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // eslint-disable-next-line no-undef
     console.log(req.body.gst_no)
-    var dir = "./public/roads_highway/"+req.body.gst_no;
+    var dir = "./public/roads_highway/"+req.body.pan_no+'-'+req.body.gst_no;
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
