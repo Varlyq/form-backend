@@ -2,7 +2,7 @@
   "name": "form-backend",
   "version": "1.0.0",
   "description": "Real Estate",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -13,6 +13,7 @@
     "async": "^3.2.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "cloudinary": "^1.27.1",
     "config": "^3.3.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
