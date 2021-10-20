@@ -5,7 +5,7 @@ const upload = require("./multer");
 const morgan = require('morgan');
 var sql = require('./config/db');
 var cors = require("cors");
-
+const CreateError = require('http-errors');
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
   cloud_name: process.env.CLOUDNAME,
@@ -35,8 +35,35 @@ app.use((req, res, next) => {
 
 app.post('/api/realEstateform',
   upload.fields([{ name: 'labour_camp_img', maxCount: 10 }, { name: 'logistics_plan_site', maxCount: 10 }])
-  , async (req, res) => {
+  , async (req, res,next) => {
     try {
+      if(!req.body){
+        return  res.status(500).json({
+          error : {
+            message : "Body is missing"
+          }
+        })
+      }
+      if(!req.files.labour_camp_img) {
+     return  res.status(404).json({
+         error : {
+           message : "Labour Camp Image not Found"
+         }
+       })
+      }
+      else if(!req.files.logistics_plan_site){
+       return res.status(404).json({
+          error : {
+            message : "Logistic Image not Found"
+          }
+        })
+      }else if(!req.files){
+      return  res.status(404).json({
+          error : {
+            message : "Logistic Image not Found"
+          }
+        })
+      }
       //labour_camp
       let labour = req.files.labour_camp_img;
       let multiplePicturePromise = labour.map((picture) =>
@@ -84,7 +111,7 @@ app.post('/api/realEstateform',
 
     } catch (err) {
       console.log("err", err);
-      return Promise.reject(err);
+    next(err)
     }
   });
 
@@ -92,6 +119,33 @@ app.post('/api/roadHighway',
   upload.fields([{ name: 'labour_camp_img', maxCount: 10 }, { name: 'logistics_plan_site', maxCount: 10 }])
   , async (req, res) => {
     try {
+      if(!req.body){
+        return  res.status(500).json({
+          error : {
+            message : "Body is missing"
+          }
+        })
+      }
+      if(!req.files.labour_camp_img) {
+     return  res.status(404).json({
+         error : {
+           message : "Labour Camp Image not Found"
+         }
+       })
+      }
+      else if(!req.files.logistics_plan_site){
+       return res.status(404).json({
+          error : {
+            message : "Logistic Image not Found"
+          }
+        })
+      }else if(!req.files){
+      return  res.status(404).json({
+          error : {
+            message : "Logistic Image not Found"
+          }
+        })
+      }
       let labour = req.files.labour_camp_img;
       let multiplePicturePromise = labour.map((picture) =>
         cloudinary.uploader.upload(
@@ -107,7 +161,6 @@ app.post('/api/roadHighway',
         newarrlabour.push(element.url)
       }
 
-      // var query = `INSERT INTO customers (name,address) VALUES('aawez','[${newarrlabour}]')`;
       let requirements = JSON.stringify(req.body.requirements);
       var query = `INSERT INTO road_highways (company_name,company_entity,reg_address,pan_no,gst_no,kharchi_credit_period,ra_bill_credit_period,project_name,project_type,project_start_address,project_end_address,road_function,road_type,road_length,road_width,road_depth,complete_road_length,labour_camp_img,additional_info,project_incharge_name,project_inch_mobile,project_inch_email,requirements,utr_no,referral_name,referral_code,payment_amount)
        VALUES ('${req.body.company_name}','${req.body.company_entity}','${req.body.reg_address}','${req.body.pan_no}','${req.body.gst_no}','${req.body.kharchi_credit_period}','${req.body.ra_bill_credit_period}','${req.body.project_name}','${req.body.project_type}','${req.body.project_start_address}','${req.body.project_end_address}','${req.body.road_function}','${req.body.road_type}',${req.body.road_length},${req.body.road_width},${req.body.road_depth},${req.body.complete_road_length},'[${newarrlabour}]','${req.body.additional_info}','${req.body.project_incharge_name}','${req.body.project_inch_mobile}','${req.body.project_inch_email}',${requirements},'${req.body.utr_no}','${req.body.referral_name}','${req.body.referral_code}','${req.body.payment_amount}')`;
@@ -127,6 +180,10 @@ app.post('/api/roadHighway',
     }
   });
 
-
+app.get('/hello',(req,res)=>{
+  res.json({
+    message : "OK"
+  })
+})
 
 module.exports = app;
