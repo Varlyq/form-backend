@@ -4,4 +4,4 @@ const port = process.env.PORT || 4000;
 
 const server = http.createServer(app);
 
-server.listen(port,()=>{console.log('Server is Running on 5000')});
+server.listen(port,()=>{console.log('Server is Running on '+ port)});

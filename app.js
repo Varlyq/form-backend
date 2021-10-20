@@ -1,10 +1,9 @@
 const express = require('express');
-fileupload = require("express-fileupload"),
-  app = express();
+const app = express();
 require('dotenv').config({ path: __dirname + '/.env' });
 const upload = require("./multer");
+const morgan = require('morgan');
 var sql = require('./config/db');
-const path = require('path');
 var cors = require("cors");
 
 const cloudinary = require('cloudinary').v2
@@ -14,8 +13,9 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 })
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(morgan('dev'));
+app.use(express.urlencoded({extended:false,limit:'50mb'}));
+app.use(express.json({limit:'50mb'}));
 
 app.use(cors());
 
@@ -30,16 +30,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
+
 
 
 app.post('/api/realEstateform',
   upload.fields([{ name: 'labour_camp_img', maxCount: 10 }, { name: 'logistics_plan_site', maxCount: 10 }])
   , async (req, res) => {
     try {
-//labour_camp
+      //labour_camp
       let labour = req.files.labour_camp_img;
-      let multiplePicturePromise = labour.map((picture) => 
+      let multiplePicturePromise = labour.map((picture) =>
         cloudinary.uploader.upload(
           picture.path,
           { public_id: `real_estate/${req.body.pan_no}-${req.body.gst_no}/labour_camp/${picture.filename}`, tags: `real_estate` }, // directory and tags are optional
@@ -52,9 +52,9 @@ app.post('/api/realEstateform',
         const element = imageResponsesLabour[index];
         newarrlabour.push(element.url)
       }
-  //logistic_plan
+      //logistic_plan
       let logistic = req.files.logistics_plan_site;
-      let multiplePicturePromiseLogistic = logistic.map((picture) => 
+      let multiplePicturePromiseLogistic = logistic.map((picture) =>
         cloudinary.uploader.upload(
           picture.path,
           { public_id: `real_estate/${req.body.pan_no}-${req.body.gst_no}/logistic_site/${picture.filename}`, tags: `real_estate` }, // directory and tags are optional
@@ -90,10 +90,10 @@ app.post('/api/realEstateform',
 
 app.post('/api/roadHighway',
   upload.fields([{ name: 'labour_camp_img', maxCount: 10 }, { name: 'logistics_plan_site', maxCount: 10 }])
-  ,async (req, res) => {
+  , async (req, res) => {
     try {
       let labour = req.files.labour_camp_img;
-      let multiplePicturePromise = labour.map((picture) => 
+      let multiplePicturePromise = labour.map((picture) =>
         cloudinary.uploader.upload(
           picture.path,
           { public_id: `road_highways/${req.body.pan_no}-${req.body.gst_no}/labour_camp/${picture.filename}`, tags: `road_highways` }, // directory and tags are optional
@@ -129,4 +129,4 @@ app.post('/api/roadHighway',
 
 
 
-  module.exports = app;
+module.exports = app;
