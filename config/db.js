@@ -49,10 +49,10 @@ const sshClient = new Client();
 // });
 
 var connection = mysql.createConnection({
-    host     : "166.62.27.188",
-    user     : "f1nzkuwltlgb",
-    password : "o24X}NO?yq",
-    database : "festive2021",
+    host     : "43.241.39.78",
+    user     : "referral_user",
+    password : "referral@456",
+    database : "referral2021",
     port     : 3306,
     multipleStatements: true,
 });
