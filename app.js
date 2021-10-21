@@ -135,6 +135,13 @@ app.post('/api/roadHighway',
          }
        })
       }
+      else if(!req.files.logistics_plan_site){
+        return res.status(404).json({
+           error : {
+             message : "Logistic Image not Found"
+           }
+         })
+       }
     else if(!req.files){
       return  res.status(404).json({
           error : {
