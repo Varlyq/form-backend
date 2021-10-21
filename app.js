@@ -156,10 +156,24 @@ app.post('/api/roadHighway',
         const element = imageResponsesLabour[index];
         newarrlabour.push(element.url)
       }
+      let logistic = req.files.logistics_plan_site;
+      let multiplePicturePromiseLogistic = logistic.map((picture) =>
+        cloudinary.uploader.upload(
+          picture.path,
+          { public_id: `road_highways/${req.body.pan_no}-${req.body.gst_no}/logistic_site/${picture.filename}`, tags: `road_highways` }, // directory and tags are optional
+        )
+      );
+      let imageResponsesLogistic = await Promise.all(multiplePicturePromiseLogistic);
+      // console.log(imageResponsesLogistic)
+      let newarrlogistic = []
+      for (let index = 0; index < imageResponsesLogistic.length; index++) {
+        const element = imageResponsesLogistic[index];
+        newarrlogistic.push(element.url)
+      }
 
       let requirements = JSON.stringify(req.body.requirements);
-      var query = `INSERT INTO road_highways (company_name,company_entity,reg_address,pan_no,gst_no,kharchi_credit_period,ra_bill_credit_period,project_name,project_type,project_start_address,project_end_address,road_function,road_type,road_length,road_width,road_depth,complete_road_length,labour_camp_img,additional_info,project_incharge_name,project_inch_mobile,project_inch_email,requirements,utr_no,referral_name,referral_code,payment_amount)
-       VALUES ('${req.body.company_name}','${req.body.company_entity}','${req.body.reg_address}','${req.body.pan_no}','${req.body.gst_no}','${req.body.kharchi_credit_period}','${req.body.ra_bill_credit_period}','${req.body.project_name}','${req.body.project_type}','${req.body.project_start_address}','${req.body.project_end_address}','${req.body.road_function}','${req.body.road_type}',${req.body.road_length},${req.body.road_width},${req.body.road_depth},${req.body.complete_road_length},'[${newarrlabour}]','${req.body.additional_info}','${req.body.project_incharge_name}','${req.body.project_inch_mobile}','${req.body.project_inch_email}',${requirements},'${req.body.utr_no}','${req.body.referral_name}','${req.body.referral_code}','${req.body.payment_amount}')`;
+      var query = `INSERT INTO road_highways (company_name,company_entity,reg_address,pan_no,gst_no,kharchi_credit_period,ra_bill_credit_period,project_name,project_type,project_start_address,project_end_address,road_function,road_type,road_length,road_width,road_depth,complete_road_length,labour_camp_img,logistics_plan_site,additional_info,project_incharge_name,project_inch_mobile,project_inch_email,requirements,utr_no,referral_name,referral_code,payment_amount)
+       VALUES ('${req.body.company_name}','${req.body.company_entity}','${req.body.reg_address}','${req.body.pan_no}','${req.body.gst_no}','${req.body.kharchi_credit_period}','${req.body.ra_bill_credit_period}','${req.body.project_name}','${req.body.project_type}','${req.body.project_start_address}','${req.body.project_end_address}','${req.body.road_function}','${req.body.road_type}',${req.body.road_length},${req.body.road_width},${req.body.road_depth},${req.body.complete_road_length},'[${newarrlabour}]','[${newarrlogistic}]','${req.body.additional_info}','${req.body.project_incharge_name}','${req.body.project_inch_mobile}','${req.body.project_inch_email}',${requirements},'${req.body.utr_no}','${req.body.referral_name}','${req.body.referral_code}','${req.body.payment_amount}')`;
       sql.query(query, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");
