@@ -111,7 +111,9 @@ app.post('/api/realEstateform',
 
     } catch (err) {
       console.log("err", err);
-    next(err)
+      return res.status(500).json({
+        error : err
+      })
     }
   });
 
@@ -133,16 +135,10 @@ app.post('/api/roadHighway',
          }
        })
       }
-      else if(!req.files.logistics_plan_site){
-       return res.status(404).json({
-          error : {
-            message : "Logistic Image not Found"
-          }
-        })
-      }else if(!req.files){
+    else if(!req.files){
       return  res.status(404).json({
           error : {
-            message : "Logistic Image not Found"
+            message : "Image not Found"
           }
         })
       }
@@ -176,7 +172,9 @@ app.post('/api/roadHighway',
 
     } catch (err) {
       console.log("err", err);
-      return Promise.reject(err);
+      return res.status(500).json({
+        error : err
+      })
     }
   });
 
